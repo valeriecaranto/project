@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up Form</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: url('https://st2.depositphotos.com/2945993/5601/v/450/depositphotos_56013171-stock-illustration-coffee-words-tags-seamless-pattern.jpg');
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 400px;
+        margin: 50px auto;
+        background-color: #6d5120;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        padding: 20px;
+    }
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    table {
+        width: 100%;
+    }
+    table tr td {
+        padding: 10px;
+    }
+    input[type="text"],
+    input[type="password"] {
+        width: calc(100% - 22px);
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+        outline: none;
+        border-color: #683404;
+    }
+    input[type="submit"] {
+        width: 100%;
+        padding: 12px;
+        background-color: #291b09;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #2b2002;
+    }
+    .password-strength {
+        font-size: 0.8em;
+        margin-top: 5px;
+    }
+    .weak {
+        color: #ff3333;
+    }
+    .medium {
+        color: #ff6600;
+    }
+    .strong {
+        color: #33cc33;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+    <h2>Sign Up</h2>
+    <form id="signup-form">
+        <table>
+            <tr>
+                <td><label for="username">Username:</label></td>
+                <td><input type="text" id="username" placeholder="Enter your username"></td>
+            </tr>
+            <tr>
+                <td><label for="password">Password:</label></td>
+                <td><input type="password" id="password" placeholder="Enter your password">
+                    <div class="password-strength" id="password-strength"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Sign Up"></td>
+            </tr>
+        </table>
+    </form>
+    <a href="registrationform.html" style="text-align: center; display: block; color: #fff; margin-top: 20px;">Already have an account? Register</a>
+</div>
+</form>
+
+<script>
+    document.getElementById("signup-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+
+        if (username.trim() === '' || password.trim() === '') {
+            alert("Please fill out all fields.");
+            return;
+        }
+
+        if (password.length < 8 ){
+            alert("Password must be at least 8 characters long.");
+            return;
+        }
+
+        // Regular expression to check password strength (at least 1 uppercase, 1 lowercase, 1 digit, 1 special character)
+        var strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!strongPasswordRegex.test(password)) {
+            alert("Password must be strong (at least 1 uppercase, 1 lowercase, 1 digit, 1 special character).");
+            return;
+        }
+
+        alert("Sign up successful!");
+        window.location.href = 'index.html';
+    });
+
+    document.getElementById("password").addEventListener("input", function() {
+        var password = this.value;
+        var passwordStrength = document.getElementById("password-strength");
+        var strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        var mediumPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+
+        if (strongPasswordRegex.test(password)) {
+            passwordStrength.textContent = "Strong password";
+            passwordStrength.classList.remove("weak", "medium");
+            passwordStrength.classList.add("strong");
+        } else if (mediumPasswordRegex.test(password)) {
+            passwordStrength.textContent = "Medium password";
+            passwordStrength.classList.remove("weak", "strong");
+            passwordStrength.classList.add("medium");
+        } else {
+            passwordStrength.textContent = "Weak password";
+            passwordStrength.classList.remove("medium", "strong");
+            passwordStrength.classList.add("weak");
+        }
+    });
+
+</script>
+
+</body>
+</html>
